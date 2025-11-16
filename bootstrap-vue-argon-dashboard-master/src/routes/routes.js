@@ -9,6 +9,8 @@ import Login from '@/views/Auth/Login.vue';
 import ForgotPassword from '@/views/Auth/ForgotPassword.vue';
 import VerifyOtp from '@/views/Auth/VerifyOtp.vue';
 import ResetPassword from '@/views/Auth/ResetPassword.vue';
+import ProfileLayout from '@/views/Profile/ProfileLayout.vue';
+
 
 const routes = [
   {
@@ -226,6 +228,46 @@ const routes = [
     path: "/reset-password",
     name: "ResetPassword",
     component: ResetPassword,
+  },
+
+  //Hồ sơ người dùng
+  {
+    path: '/profileUser',
+    component: ProfileLayout,
+    children: [
+      {
+        path: '', // Thông tin cá nhân
+        name: 'Profile',
+        component: () => import('@/views/Profile/ProfileInfo.vue'),
+      },
+      {
+        path: 'change-password', //Đổi mật khẩu
+        name: 'ChangePassword',
+        component: () => import('@/views/Profile/ChangePassword.vue'),
+      },
+      {
+        path: 'payment-history', //Lịch sử thanh toán
+        name: 'PaymentHistory',
+        component: () => import('@/views/Profile/PaymentHistory.vue'),
+      },
+      {
+        path: 'payment-history/:id', // Chi tiết thanh toán
+        name: 'PaymentDetail',
+        component: () => import('@/views/Profile/PaymentDetail.vue'), // Bạn sẽ cần tạo file này
+        props: true 
+      },
+      {
+        path: 'booking-history', //Lịch sử đặt tiệc
+        name: 'BookingHistory',
+        component: () => import('@/views/Profile/BookingHistory.vue'),
+      },
+      {
+        path: 'booking-history/:id', //Chi tiết đặt tiệc
+        name: 'BookingDetail',
+        component: () => import('@/views/Profile/BookingDetail.vue'), 
+        props: true 
+      },
+    ],
   },
 ];
 

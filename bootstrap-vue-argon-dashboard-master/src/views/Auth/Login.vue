@@ -237,7 +237,7 @@ export default {
 
                         // Chuyển hướng đến dashboard
                         setTimeout(() => {
-                            this.$router.push('/dashboard');
+                            this.$router.push('/profileUser');
                         }, 1000);
                     }
                 })
