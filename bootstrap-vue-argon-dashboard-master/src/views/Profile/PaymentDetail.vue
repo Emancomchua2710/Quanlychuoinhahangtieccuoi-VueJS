@@ -29,7 +29,7 @@
           <strong>Mã giao dịch:</strong> {{ payment.id }}
         </b-col>
         <b-col cols="auto">
-          <strong>Trạng thái:</strong> 
+          <strong>Trạng thái: </strong> 
           <span class="text-success font-weight-bold">{{ payment.status }}</span>
         </b-col>
         <b-col cols="auto">
