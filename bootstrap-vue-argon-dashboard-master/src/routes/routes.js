@@ -1,17 +1,24 @@
 // router/routes.js
 import DashboardLayout from "@/views/Layout/DashboardLayout.vue";
-import AuthLayout from "@/views/Pages/AuthLayout.vue";
-import NotFound from "@/views/NotFoundPage.vue";
 import Home from "@/views/Pages/Home.vue";
-import Login from "@/views/Pages/Login.vue";
-import Register from "@/views/Pages/Register.vue";
-import Profile from "@/views/Pages/Profile.vue";
 import Search from "@/views/Pages/Search.vue";
 import UserLayout from "@/views/KM/UserLayout.vue";
+import Register from '@/views/Auth/Register.vue';
+import Login from '@/views/Auth/Login.vue';
+import ForgotPassword from '@/views/Auth/ForgotPassword.vue';
+import VerifyOtp from '@/views/Auth/VerifyOtp.vue';
+import ResetPassword from '@/views/Auth/ResetPassword.vue';
+import ProfileLayout from '@/views/Profile/ProfileLayout.vue';
+
+
 const routes = [
   {
     path: "/",
-    redirect: "/dashboard",
+    name: "Home",
+    component: Home,
+  },
+  {
+    path: "/dashboard", // <-- Đổi path từ "/" thành "/dashboard"
     component: DashboardLayout,
     children: [
       {
@@ -90,17 +97,17 @@ const routes = [
         component: () => import("../views/Promotion/EditPromotion.vue"),
       },
 
-   {
-  path: "/promotions",
-  name: "PromotionList",
-  component: () => import("../components/Home/PromotionList.vue"),
-},
+      {
+        path: "/promotions",
+        name: "PromotionList",
+        component: () => import("../components/Home/PromotionList.vue"),
+      },
 
-// {
-//   path: "/promotion/:id",
-//   name: "PromotionDetail",
-//   component: () => import("../components/Home/PromotionDetail.vue"),
-// },
+      // {
+      //   path: "/promotion/:id",
+      //   name: "PromotionDetail",
+      //   component: () => import("../components/Home/PromotionDetail.vue"),
+      // },
 
 
       // 👉 SẢNH
@@ -185,14 +192,6 @@ const routes = [
         name: "LichSuKho",
         component: () => import("../views/kho-hang/LichSuKho.vue"),
       },
-
-      // 👉 HỒ SƠ
-      {
-        path: "/profile",
-        name: "profile",
-        component: () => import("../views/Pages/UserProfile.vue"),
-      },
-
       // 👉 CÀI ĐẶT
       {
         path: "/settings",
@@ -214,9 +213,6 @@ const routes = [
     name: "Home",
     component: Home,
   },
-  { path: "/login", name: "Login", component: Login },
-  { path: "/register", name: "Register", component: Register },
-  { path: "/profile", name: "Profile", component: Profile },
   { path: "/search", name: "Search", component: Search },
   {
     path: "/dat-tiec",
@@ -230,35 +226,85 @@ const routes = [
   },
 
   {
-  path: "/promotion/:id",
-  component: UserLayout,
-  children: [
-    {
-      path: "",
-      name: "PromotionDetailUser",
-      component: () => import("../components/Home/PromotionDetail.vue"),
-    }
-  ]
-},
+    path: "/promotion/:id",
+    component: UserLayout,
+    children: [
+      {
+        path: "",
+        name: "PromotionDetailUser",
+        component: () => import("../components/Home/PromotionDetail.vue"),
+      }
+    ]
+  },
 
 
   // 👉 AUTH LAYOUT (Đăng nhập, đăng ký)
   {
-    path: "/",
-    redirect: "/login",
-    component: AuthLayout,
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
+
+  {
+    path: "/register",
+    name: "Register",
+    component: Register,
+  },
+
+  {
+    path: "/forgot-password",
+    name: "ForgotPassword",
+    component: ForgotPassword,
+  },
+  {
+    path: "/verify-otp",
+    name: "VerifyOtp",
+    component: VerifyOtp,
+  },
+
+  {
+    path: "/reset-password",
+    name: "ResetPassword",
+    component: ResetPassword,
+  },
+
+  //Hồ sơ người dùng
+  {
+    path: '/profileUser',
+    component: ProfileLayout,
     children: [
       {
-        path: "/login",
-        name: "login",
-        component: () => import("../views/Pages/Login.vue"),
+        path: '', // Thông tin cá nhân
+        name: 'Profile',
+        component: () => import('@/views/Profile/ProfileInfo.vue'),
       },
       {
-        path: "/register",
-        name: "register",
-        component: () => import("../views/Pages/Register.vue"),
+        path: 'change-password', //Đổi mật khẩu
+        name: 'ChangePassword',
+        component: () => import('@/views/Profile/ChangePassword.vue'),
       },
-      { path: "*", component: NotFound },
+      {
+        path: 'payment-history', //Lịch sử thanh toán
+        name: 'PaymentHistory',
+        component: () => import('@/views/Profile/PaymentHistory.vue'),
+      },
+      {
+        path: 'payment-history/:id', // Chi tiết thanh toán
+        name: 'PaymentDetail',
+        component: () => import('@/views/Profile/PaymentDetail.vue'), // Bạn sẽ cần tạo file này
+        props: true
+      },
+      {
+        path: 'booking-history', //Lịch sử đặt tiệc
+        name: 'BookingHistory',
+        component: () => import('@/views/Profile/BookingHistory.vue'),
+      },
+      {
+        path: 'booking-history/:id', //Chi tiết đặt tiệc
+        name: 'BookingDetail',
+        component: () => import('@/views/Profile/BookingDetail.vue'),
+        props: true
+      },
     ],
   },
 ];

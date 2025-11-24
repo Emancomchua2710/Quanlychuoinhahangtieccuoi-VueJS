@@ -36,11 +36,11 @@
       <!-- Nếu đã đăng nhập -->
       <template v-else>
         <div class="homeheader-user-dropdown" @click="toggleDropdown">
-          <span>Chào, {{ user.username }}</span>
+          <span>{{ user.username }}</span>
           <i class="fas fa-caret-down"></i>
 
           <div v-if="dropdownOpen" class="homeheader-dropdown-menu" @click.stop>
-            <router-link to="/profile">Trang cá nhân</router-link>
+            <router-link to="/profileUser">Trang cá nhân</router-link>
             <a @click="logout">Đăng xuất</a>
           </div>
         </div>
@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       keyword: "",
-      user: JSON.parse(localStorage.getItem("user")) || null,
+      user: JSON.parse(localStorage.getItem("user_info")) || null,
       dropdownOpen: false,
     };
   },
@@ -75,8 +75,8 @@ export default {
       this.dropdownOpen = !this.dropdownOpen;
     },
     logout() {
-      localStorage.removeItem("user");   // xóa thông tin user
-      localStorage.removeItem("token");  // xóa token
+      localStorage.removeItem("user_info");   // xóa thông tin user
+      localStorage.removeItem("user_token");  // xóa token
       this.user = null;
       this.$router.push("/login");       // chuyển về trang login
     },
